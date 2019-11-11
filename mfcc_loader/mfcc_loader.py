@@ -1,5 +1,4 @@
 import pickle
-import matplotlib.pyplot as plt
 
 # wczytanie mfcc_dict z pliku pickle
 
