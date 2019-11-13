@@ -13,11 +13,10 @@ filenames = [[tmp for i in range(0, len(names))] for j in range(0, 10)]
 print(len(names))
 print(len(filenames[0]))
 
-tmp_dict = {}
 mfcc_dict = {}
 
 for i in range(0, len(names)):
-    tmp_dict.clear()
+    tmp_dict = {}
     for j in range(0, 10):
         filenames[j][i] = names[i] + '_' + str(j) + '_.wav'
         #print(filenames[j][i])
