@@ -35,4 +35,11 @@ print(X.shape)
 
 from utils import train_and_validate
 
-models = train_and_validate(X, y, model_type='conv', epochs=30, data_shuffle=False)
+model_type = 'dense'
+
+models, acc = train_and_validate(X, y, model_type=model_type, epochs=30, data_shuffle=True)
+
+best_model = models[np.argmax(acc)]
+model_name = 'model_'+model_type+'_trained.h5'
+best_model.save(model_name)
+
