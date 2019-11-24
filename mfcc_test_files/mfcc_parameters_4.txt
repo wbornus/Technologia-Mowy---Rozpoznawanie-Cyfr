@@ -1,0 +1,10 @@
+ mfcc_from_file = mfcc(data, samplerate=16000,
+                winlen=0.05,
+                winstep=0.025,
+                numcep=13,nfilt=30,
+                nfft=800,lowfreq=0,
+                highfreq=None,
+                preemph=0.9,
+                ceplifter=25,
+                appendEnergy=True,
+                winfunc=np.hanning)
