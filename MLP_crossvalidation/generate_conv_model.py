@@ -6,13 +6,14 @@ from keras.optimizers import Adam
 """implementing Convolutional Neural Network"""
 
 model_conv_input = Input(shape=(70, 13, 1))
-model_conv = Conv2D(filters=17, kernel_size=(10,10), strides=(6,6),
+model_conv = Conv2D(filters=20, kernel_size=(10,10), strides=(6,6),
                     padding='same', activation='sigmoid')(model_conv_input)
 # model_conv = Conv2D(filters=16, kernel_size=(5,5), strides=(4,4),
 #                     padding='same', activation='sigmoid')(model_conv)
 model_conv = Flatten()(model_conv)
-model_conv = Dense(units=100, activation='sigmoid')(model_conv)
-# model_conv = Dense(units=128, activation='sigmoid')(model_conv)
+model_conv = Dense(units=128, activation='relu')(model_conv)
+model_conv = Dense(units=64, activation='relu')(model_conv)
+model_conv = Dropout(0.3)(model_conv)
 model_conv = Dense(units=10, activation='softmax')(model_conv)
 model_conv = Model(inputs=model_conv_input, output=model_conv)
 

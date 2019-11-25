@@ -60,7 +60,8 @@ def train_and_validate(dict_X, dict_y, model_type='conv', data_shuffle=False, n_
         else:
             return -1
 
-    plt.plot(acc_list)
+    bar_list = np.arange(n_splits) + 1
+    plt.bar(bar_list, acc_list, width=0.5)
     title_model_type = 'model type: ' + str(model_type) +'  ||||  '
     title_data_shuffle = 'data shuffle: ' + str(data_shuffle) + '\n'
 
@@ -71,8 +72,8 @@ def train_and_validate(dict_X, dict_y, model_type='conv', data_shuffle=False, n_
     plt.ylim(0, 1.2)
     plt.grid()
     plt.title(title)
-    plt.ylabel('accuracy [%]')
-    plt.xlabel('model')
+    plt.ylabel('accuracy')
+    plt.xlabel('models (n_splits)')
     plt.show()
 
     return model_list, acc_list

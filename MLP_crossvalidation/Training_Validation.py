@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pickle
-with open('../mfcc_loader/mfcc_dict.pickle', 'rb') as handle:
+with open('../mfcc_test_files/mfcc_dict3.pickle', 'rb') as handle:
         mfcc_dict = pickle.load(handle)
 
 """data preprocessing"""
@@ -27,17 +27,22 @@ for it_0 in range(len(mfcc_dict)):
 X = np.array(X)
 y = np.array(y)
 
+mean_X = np.mean(X)
+std_X = np.std(X)
 
-print(np.mean(to_avg))
-print(np.std(to_avg))
-print(y[10, 5])
-print(X.shape)
+# print(mean_X)
+# print(std_X)
+
+X = (X - mean_X) / std_X
+
+plt.pcolormesh(X[20,4])
+plt.show()
 
 from utils import train_and_validate
 
-model_type = 'dense'
+model_type = 'conv'
 
-models, acc = train_and_validate(X, y, model_type=model_type, epochs=30, data_shuffle=True)
+models, acc = train_and_validate(X, y, model_type=model_type, n_splits=8,  epochs=30, data_shuffle=False)
 
 best_model = models[np.argmax(acc)]
 model_name = 'model_'+model_type+'_trained.h5'
