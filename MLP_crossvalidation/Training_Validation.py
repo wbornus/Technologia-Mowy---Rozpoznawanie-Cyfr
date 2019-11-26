@@ -30,6 +30,8 @@ y = np.array(y)
 mean_X = np.mean(X)
 std_X = np.std(X)
 
+np.savez_compressed('normalization_data.npz', mean_X, std_X)
+
 # print(mean_X)
 # print(std_X)
 
@@ -38,13 +40,13 @@ X = (X - mean_X) / std_X
 plt.pcolormesh(X[20,4])
 plt.show()
 
-from utils import train_and_validate
-
-model_type = 'conv'
-
-models, acc = train_and_validate(X, y, model_type=model_type, n_splits=8,  epochs=30, data_shuffle=False)
-
-best_model = models[np.argmax(acc)]
-model_name = 'model_'+model_type+'_trained.h5'
-best_model.save(model_name)
+# from utils import train_and_validate
+#
+# model_type = 'conv'
+#
+# models, acc = train_and_validate(X, y, model_type=model_type, n_splits=8,  epochs=30, data_shuffle=False)
+#
+# best_model = models[np.argmax(acc)]
+# model_name = 'model_'+model_type+'_trained.h5'
+# best_model.save(model_name)
 

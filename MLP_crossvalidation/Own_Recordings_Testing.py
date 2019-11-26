@@ -2,7 +2,7 @@ from scipy.io import wavfile
 
 from utils import predict_digit
 
-directory = './own_test_data/AG/'
+directory = './own_test_data/PG/'
 
 predictions = []
 correct = 0
