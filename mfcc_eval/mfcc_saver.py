@@ -16,7 +16,6 @@ print(names)
 # stworzenie słownika mfcc_dict
 mfcc_dict = {}
 for i in range(0, len(names)):
-    tmp_dict = {}
     fs, data = wavfile.read('./' + path_folder + '/' + names[i] + '.wav')
     mfcc_from_file = mfcc(data, samplerate=16000,
                           winlen=0.025,
