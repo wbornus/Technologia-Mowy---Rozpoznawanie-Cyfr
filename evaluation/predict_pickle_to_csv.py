@@ -12,15 +12,15 @@ with open('./mfcc_eval/mfcc_dict_eval.pickle', 'rb') as handle:
 
 model = load_model('../MLP_crossvalidation/model_conv_trained.h5')
 
-fnames = os.listdir('./eval/')
+fnames = os.listdir('../eval/')
 
 mfcc_data = []
 for it in range(len(mfcc_dict)):
     tmp = np.array(mfcc_dict[it])
-    if tmp.shape[0] > 70:
-        tmp = tmp[:70, :]
+    if tmp.shape[0] > 90:
+        tmp = tmp[:90, :]
     else:
-        to_append = np.zeros((70 - tmp.shape[0], 13))
+        to_append = np.zeros((90 - tmp.shape[0], 13))
         tmp = np.concatenate((tmp, to_append), axis=0)
     mfcc_data.append(tmp.tolist())
 
