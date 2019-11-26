@@ -4,6 +4,15 @@ import pickle
 with open('../mfcc_test_files/mfcc_dict3.pickle', 'rb') as handle:
         mfcc_dict = pickle.load(handle)
 
+lengths = []
+for it in range(len(mfcc_dict)):
+        tmp = np.array(mfcc_dict[it][9]).shape[0]
+        lengths = np.append(lengths, tmp)
+
+print(np.mean(lengths))
+print(np.std(lengths))
+
+
 """data preprocessing"""
 X = []
 y = []
@@ -14,10 +23,10 @@ for it_0 in range(len(mfcc_dict)):
         for it_1 in range(len(mfcc_dict[0])):
                 tmp = np.array(mfcc_dict[it_0][it_1])
                 to_avg.append(tmp.shape[0])
-                if tmp.shape[0] > 70:
-                        tmp = tmp[:70, :]
+                if tmp.shape[0] > 90:
+                        tmp = tmp[:90, :]
                 else:
-                        to_append = np.zeros((70 - tmp.shape[0], 13))
+                        to_append = np.zeros((90 - tmp.shape[0], 13))
                         tmp = np.concatenate((tmp, to_append), axis=0)
                 X_column.append(tmp)
                 y_column.append(it_1)
@@ -37,16 +46,16 @@ np.savez_compressed('normalization_data.npz', mean_X, std_X)
 
 X = (X - mean_X) / std_X
 
-plt.pcolormesh(X[20,4])
+plt.pcolormesh(X[10,9])
 plt.show()
 
-# from utils import train_and_validate
-#
-# model_type = 'conv'
-#
-# models, acc = train_and_validate(X, y, model_type=model_type, n_splits=8,  epochs=30, data_shuffle=False)
-#
-# best_model = models[np.argmax(acc)]
-# model_name = 'model_'+model_type+'_trained.h5'
-# best_model.save(model_name)
+from utils import train_and_validate
+
+model_type = 'conv'
+
+models, acc = train_and_validate(X, y, model_type=model_type, n_splits=8,  epochs=30, data_shuffle=False)
+
+best_model = models[np.argmax(acc)]
+model_name = 'model_'+model_type+'_trained.h5'
+best_model.save(model_name)
 

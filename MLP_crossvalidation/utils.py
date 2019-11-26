@@ -42,16 +42,16 @@ def train_and_validate(dict_X, dict_y, model_type='conv', data_shuffle=False, n_
         y_test_onehot = to_categorical(np.reshape(y_test, (y_test.shape[0] * y_test.shape[1])), 10)
 
         if model_type == 'dense':
-            X_train_flat = np.reshape(X_train, (X_train.shape[0]*X_train.shape[1], 70*13))
-            X_test_flat = np.reshape(X_test, (X_test.shape[0]*X_test.shape[1], 70*13))
+            X_train_flat = np.reshape(X_train, (X_train.shape[0]*X_train.shape[1], 90*13))
+            X_test_flat = np.reshape(X_test, (X_test.shape[0]*X_test.shape[1], 90*13))
             model.fit(X_train_flat, y_train_onehot, epochs=epochs,
                         validation_data=(X_test_flat, y_test_onehot))
             model_list.append(model)
             acc_list.append(model.evaluate(X_test_flat, y_test_onehot)[1])
 
         elif model_type == 'conv':
-            X_train_conv = np.reshape(X_train, (X_train.shape[0]*X_train.shape[1], 70, 13, 1))
-            X_test_conv = np.reshape(X_test, (X_test.shape[0]*X_test.shape[1], 70, 13, 1))
+            X_train_conv = np.reshape(X_train, (X_train.shape[0]*X_train.shape[1], 90, 13, 1))
+            X_test_conv = np.reshape(X_test, (X_test.shape[0]*X_test.shape[1], 90, 13, 1))
             model.fit(X_train_conv, y_train_onehot, epochs=epochs, steps_per_epoch=10,
                       validation_data=(X_test_conv, y_test_onehot), validation_steps=1)
             model_list.append(model)
@@ -92,20 +92,20 @@ def predict_digit(data, fs=16000, model_type='conv'):
                     winstep=0.01, numcep=13, nfilt=26, nfft=512, lowfreq=0, highfreq=None,
                     preemph=0.97, ceplifter=22, appendEnergy=True, winfunc=np.hamming)
 
-    if data_mfcc.shape[0] > 70:
+    if data_mfcc.shape[0] > 90:
         data_mfcc = data_mfcc[:70, :]
     else:
         to_append = np.zeros((70 - data_mfcc.shape[0], 13))
         data_mfcc = np.concatenate((data_mfcc, to_append), axis=0)
 
     if model_type == 'conv':
-        input_data = np.reshape(data_mfcc, (1, 70, 13, 1))
+        input_data = np.reshape(data_mfcc, (1, 90, 13, 1))
         model_name = 'model_'+model_type+'_trained.h5'
         model = load_model(model_name)
         prediction = np.reshape(np.argmax(model.predict(input_data), axis=1), (1,))
 
     elif model_type == 'dense':
-        input_data = np.reshape(data_mfcc, (1, 70*13))
+        input_data = np.reshape(data_mfcc, (1, 90*13))
         model_name = 'model_'+model_type+'_trained.h5'
         model = load_model(model_name)
         prediction = np.reshape(np.argmax(model.predict(input_data), axis=1), (1,))

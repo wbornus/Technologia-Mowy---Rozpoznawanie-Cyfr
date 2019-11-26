@@ -5,7 +5,7 @@ from keras.optimizers import Adam
 
 """implementing Convolutional Neural Network"""
 
-model_conv_input = Input(shape=(70, 13, 1))
+model_conv_input = Input(shape=(90, 13, 1))
 model_conv = Conv2D(filters=20, kernel_size=(10,10), strides=(6,6),
                     padding='same', activation='sigmoid')(model_conv_input)
 # model_conv = Conv2D(filters=16, kernel_size=(5,5), strides=(4,4),
